@@ -1,17 +1,15 @@
-SOURCE_IMAGE = os.getenv("SOURCE_IMAGE", default='your-registry.io/project/tanzu-java-web-app-source')
+SOURCE_IMAGE = os.getenv("SOURCE_IMAGE", default='harbor.nvspdren.navy.mil/tap/workloads/gary-java-web-app-gary-source')
 LOCAL_PATH = os.getenv("LOCAL_PATH", default='.')
-NAMESPACE = os.getenv("NAMESPACE", default='default')
-OUTPUT_TO_NULL_COMMAND = os.getenv("OUTPUT_TO_NULL_COMMAND", default=' > /dev/null ')
-
+NAMESPACE = os.getenv("NAMESPACE", default='gary')
 k8s_custom_deploy(
-    'tanzu-java-web-app',
+    'gary-java-web-app-gary-source',
     apply_cmd="tanzu apps workload apply -f config/workload.yaml --debug --live-update" +
                " --local-path " + LOCAL_PATH +
                " --source-image " + SOURCE_IMAGE +
                " --namespace " + NAMESPACE +
                " --yes " +
-               OUTPUT_TO_NULL_COMMAND +
-               " && kubectl get workload tanzu-java-web-app --namespace " + NAMESPACE + " -o yaml",
+               "--registry-ca-cert C:\\workspace\\sts-workspace\\tanzu\\application-accelerator-samples\\tanzu-java-web-app\\cert\\harbor.nvspdren.navy.mil.crt --registry-username admin --registry-password Harbor12345" +
+               " && kubectl get workload gary-java-web-app-gary-source --namespace " + NAMESPACE + " -o yaml",
     delete_cmd="tanzu apps workload delete -f config/workload.yaml --namespace " + NAMESPACE + " --yes",
     deps=['pom.xml', './target/classes'],
     container_selector='workload',
@@ -20,5 +18,7 @@ k8s_custom_deploy(
     ]
 )
 
-k8s_resource('tanzu-java-web-app', port_forwards=["8080:8080"],
-            extra_pod_selectors=[{'carto.run/workload-name': 'tanzu-java-web-app', 'app.kubernetes.io/component': 'run'}])
+k8s_resource('gary-java-web-app-gary-source', port_forwards=["8080:8080"],
+            extra_pod_selectors=[{'carto.run/workload-name': 'gary-java-web-app-gary-source', 'app.kubernetes.io/component': 'run'}])
+
+allow_k8s_contexts('tap')

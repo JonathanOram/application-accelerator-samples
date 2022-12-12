@@ -2,10 +2,10 @@ apiVersion: carto.run/v1alpha1
 kind: Workload
 metadata:  
   labels:
-    app.kubernetes.io/part-of: tanzu-java-web-app
+    app.kubernetes.io/part-of: gary-java-web-app-gary
     apps.tanzu.vmware.com/workload-type: web
     apps.tanzu.vmware.com/has-tests: true
-  name: tanzu-java-web-app
+  name: gary-java-web-app-gary
   namespace: gary  
 spec:
   params:
@@ -16,5 +16,5 @@ spec:
     git:
       ref:
         branch: main
-      url: https://github.com/GaryPlattenburg/application-accelerator-samples
+      url: https://github.com/JonathanOram/application-accelerator-samples
     subPath: tanzu-java-web-app
