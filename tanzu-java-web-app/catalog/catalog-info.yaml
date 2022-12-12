@@ -1,7 +1,7 @@
 apiVersion: backstage.io/v1alpha1
 kind: Component
 metadata:
-  name: gary-java-web-app
+  name: gary-java-web-app-gary
   description: Tanzu Java Web App
   tags:
     - app-accelerator
@@ -10,7 +10,7 @@ metadata:
     - web
     - tanzu
   annotations:
-    'backstage.io/kubernetes-label-selector': 'app.kubernetes.io/part-of=gary-java-web-app'
+    'backstage.io/kubernetes-label-selector': 'app.kubernetes.io/part-of=gary-java-web-app-gary'
 spec:
   type: service
   lifecycle: experimental
