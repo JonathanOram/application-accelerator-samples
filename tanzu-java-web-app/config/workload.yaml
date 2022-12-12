@@ -12,6 +12,9 @@ spec:
   - name: annotations
     value:
       autoscaling.knative.dev/minScale: "1"
+  - name: testing_pipeline_params
+    value:
+      testing-sub-path: "./tanzu-java-web-app"
   source:
     git:
       ref:

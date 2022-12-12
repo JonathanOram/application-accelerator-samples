@@ -9,6 +9,9 @@ spec:
   params:
     - name: source-url                       # (!) required
     - name: source-revision                  # (!) required                 
+    - default: ""
+      name: testing-sub-path
+      type: string
   tasks:
     - name: test
       params:
@@ -16,15 +19,21 @@ spec:
           value: $(params.source-url)
         - name: source-revision
           value: $(params.source-revision)
+        - name: testing-sub-path
+          value: $(params.testing-sub-path)
       taskSpec:
         params:
           - name: source-url
           - name: source-revision
+          - name: testing-sub-path
         steps:
           - name: test
             image: gradle
             script: |-
               cd `mktemp -d`
-
               wget -qO- $(params.source-url) | tar xvz -m
-              ./tanzu-java-web-app/mvnw test
+              if [ ! -z "$(params.testing-sub-path)" ]; then
+                echo "navigating to repo subpath"
+                cd $(params.testing-sub-path)
+              fi
+              ./mvnw test
